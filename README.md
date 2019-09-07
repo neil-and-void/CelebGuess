@@ -1,5 +1,6 @@
-# CelebGuess
-Android app where you guess the celebrity
+# Celebrity Guess
+Android app where you guess the celebrity.
+An app I built to practice working with HTML files and images from the web within android
 
 
 
