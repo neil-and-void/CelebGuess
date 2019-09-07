@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return myBitmap;
 
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -146,17 +147,20 @@ public class MainActivity extends AppCompatActivity {
         button3 = (Button) findViewById(R.id.button2);
         button4 = (Button) findViewById(R.id.button3);
 
-        // create new thread
+        // create downloadTask class
         DownloadTask downloadTask = new DownloadTask();
 
         // string to store result in
-        String result = null;
+        String result;
 
         // get website data
         try {
 
+            // get the html from the URL
             result = downloadTask.execute("http://www.posh24.se/kandisar").get();
-
+            if(result == null) {
+                Log.i("jfdksal", "not here");
+            }
             // isolate information about celebrities and their pictures
             String[] splitResult = result.split("<div class=\"sidebarContainer\">");
 
@@ -208,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     /* Generate a new question */
     public void generateQuestion(){
 
-        // generate new random number
+        // generate new random number within size of celebrity list and have it be the answer for the current question
         Random rand = new Random();
         chosenCeleb = rand.nextInt(celebURLs.size());
 
@@ -239,6 +243,16 @@ public class MainActivity extends AppCompatActivity {
                         incorrectAnswerLocation = rand.nextInt(celebURLs.size());
 
                     }
+
+                    // generates new incorrect answer for duplicate incorrect answers
+                    for(int j = 0; j < answers.length; j++){
+                        while(answers[j] == celebNames.get(incorrectAnswerLocation)){
+                            incorrectAnswerLocation = rand.nextInt(celebURLs.size());
+
+                        }
+                    }
+
+                    // place name of an incorrect answer at index i
                     answers[i] = celebNames.get(incorrectAnswerLocation);
 
                 }
